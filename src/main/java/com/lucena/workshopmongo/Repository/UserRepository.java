@@ -1,4 +1,4 @@
-package com.lucena.workshopmongo.Repository;
+package com.lucena.workshopmongo.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;

@@ -8,8 +8,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import com.lucena.workshopmongo.Repository.UserRepository;
 import com.lucena.workshopmongo.domain.User;
+import com.lucena.workshopmongo.repository.UserRepository;
 
 @SpringBootApplication
 public class WorkshopmongoApplication {
