@@ -51,4 +51,20 @@ public class UserService {
 			return new User(objDto.getId(), objDto.getName(), objDto.getEmail());
 		}
 		
+		
+		public User update(User obj) {
+				Optional<User> newObj = repo.findById(obj.getId());
+				updateData(newObj, obj);
+				return repo.save(newObj.get());//.get extra o User do optional
+		}
+
+
+		private void updateData(Optional<User> newObj, User obj) {
+
+				//O Optional<User> é uma caixa — você não acessa os métodos diretamente nela, precisa abrir a caixa primeiro com .get()!
+				newObj.get().setName(obj.getName());
+				newObj.get().setEmail(obj.getEmail());
+			
+			
+		}
 }
