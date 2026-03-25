@@ -6,28 +6,59 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lucena.workshopmongo.domain.User;
 import com.lucena.workshopmongo.dto.UserDTO;
-import com.lucena.workshopmongo.resources.Service.UserService;
+import com.lucena.workshopmongo.resources.service.UserService;
 
+/*
+ * a classe resouce recebe as requisições do front/ postman e se comunica com o service
+ * que por sua vez se comunica com repository que acessa o banco.
+ * 
+ * POSTMAN/FRONTEND
+      ↓ requisição HTTP
+      
+	RESOURCE/CONTROLLER
+→ 	Recebe a requisição
+→ 	Chama o Service
+      ↓
+
+SERVICE
+→ Contém as regras de negócio
+→ Chama o Repository
+      ↓
+
+REPOSITORY
+→ Acessa o banco MongoDB
+      ↓
+
+MONGODB
+→ Retorna os dados
+ */
 @RestController
 @RequestMapping(value = "/users")
 public class UserResources {
 	@Autowired
 	private UserService service;
-	
-	@RequestMapping(method=RequestMethod.GET)
+
+	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<UserDTO>> findAll() {
 
 		List<User> list = service.findAll();
-		//convertando cada objeto da lista origal para um DTO
-		List<UserDTO> listDto = list.stream().map(x->new UserDTO(x)).collect(Collectors.toList());
-		
+		// convertando cada objeto da lista origal para um DTO
+		List<UserDTO> listDto = list.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
+
 		return ResponseEntity.ok().body(listDto);
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public ResponseEntity<UserDTO> findById(@PathVariable String id) {
+		User obj = service.findById(id);
+		return ResponseEntity.ok().body(new UserDTO(obj));
 	}
 
 }
