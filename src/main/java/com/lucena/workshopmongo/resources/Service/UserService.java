@@ -7,9 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lucena.workshopmongo.domain.User;
+import com.lucena.workshopmongo.dto.UserDTO;
 import com.lucena.workshopmongo.repository.UserRepository;
 import com.lucena.workshopmongo.resources.service.exception.ObjectNotFoundException;
 
+/**
+ * classe responsavel por chamar a interface repository para poder acessar o banco
+ */
 @Service
 public class UserService {
 	
@@ -30,4 +34,16 @@ public class UserService {
 			}
 			return user.get();
 		}
+		
+		
+		public User insert(User obj) {
+			return repo.insert(obj);
+		}
+		
+		
+		public User fromDTO(UserDTO objDto) {
+			
+			return new User(objDto.getId(), objDto.getName(), objDto.getEmail());
+		}
+		
 }
